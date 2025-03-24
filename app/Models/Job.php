@@ -17,7 +17,7 @@ class Job extends Model
         'salary'
     ];
 
-    public function Employer(){
+    public function employer(){
         return $this->belongsTo(Employer::class);
     }
 

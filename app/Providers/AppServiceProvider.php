@@ -29,14 +29,14 @@ class AppServiceProvider extends ServiceProvider
         
         Paginator::useTailwind();
 
-         //Authorization
+         //Authorization OR Use Policy (php artisan make:policy) -check policies in app
 
-         Gate::define('edit-job', function(User $user, Job $job){
+        //  Gate::define('edit-job', function(User $user, Job $job){
         
-            return $job->employer->user->is($user);
+        //     return $job->employer->user->is($user);
         
 
-        });
+        // });
     }
     
 }

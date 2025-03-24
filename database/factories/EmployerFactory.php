@@ -20,7 +20,7 @@ class EmployerFactory extends Factory
     {
         return [
             'name'=> fake()->company(),
-            'user'=>User::factory(),
+            'user_id'=>User::factory(),
 
         ];
     }

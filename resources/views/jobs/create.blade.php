@@ -24,7 +24,7 @@
 
         <x-form-field>
           <x-form-label for="salary">Salary</x-form-label>
-          <x-form-input type="text" name="title" id="title" placeholder="$50,000 USD"  required />
+          <x-form-input type="text" name="salary" id="salary" placeholder="$50,000 USD"  required />
           </div>
           <x-form-error name="salary"/>
         </x-form-field>

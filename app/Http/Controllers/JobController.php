@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\JobPosted;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\User;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Gate;
 class JobController extends Controller
 {
     public function index(){
-        $jobs = Job::with('Employer')->latest()->simplePaginate(3); //or paginate(3)
+        $jobs = Job::with('employer')->latest()->simplePaginate(3); //or paginate(3)
 
     return view('jobs.index', ['jobs'=>$jobs]);
     }
@@ -30,28 +31,23 @@ class JobController extends Controller
             'salary'=>['required']
         ]);
     
-     Job::create([
+     $job = Job::create([
         'title'=>request('title'),
         'salary'=>request('salary'),
         'employer_id'=> 1,
         ]);
+        Mail::to($job->employer->user->email)->queue(new JobPosted($job));
+
     
         return redirect('/jobs');
     }
     public function edit(Job $job){
-        //Authorization
+        //Authorization-also check AppServiceProvider.php for the remaining authorization,
+        //go to where you have your edit code e.g show.blade.php in this case and wrap the edit code with @can or @cannot directive
+        //Now, check middleware in web.php, it has handled the gate method
 
-        Gate::define('edit-job', function(User $user, Job $job){
         
-            return $job->employer->user->is($user);
-        
-
-        });
-        if(!Auth::check()){
-            return redirect('/login');
-
-        }
-       Gate::authorize('edit-job', $job);
+        // Gate::authorize('edit-job', $job);
         
         
         return view('jobs.edit',['job'=>$job]);
