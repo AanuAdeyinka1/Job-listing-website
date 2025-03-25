@@ -12,7 +12,7 @@ class Employer extends Model
 
     protected $fillable =[
         'id',
-        'name'
+        'name',
     ];
     public function user(){
       return  $this->belongsTo(   User::class);
